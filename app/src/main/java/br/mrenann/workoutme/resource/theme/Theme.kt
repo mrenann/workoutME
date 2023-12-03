@@ -1,4 +1,4 @@
-package br.mrenann.workoutme.ui.theme
+package br.mrenann.workoutme.resource.theme
 
 import android.app.Activity
 import android.os.Build

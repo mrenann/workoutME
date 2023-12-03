@@ -27,10 +27,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="br.mrenann.workoutme" />
+                  <option name="mobileSdkAppId" value="1:281842799066:android:3b5d567a63a6269ca7b0e3" />
+                  <option name="projectId" value="workoutme-app" />
+                  <option name="projectNumber" value="281842799066" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

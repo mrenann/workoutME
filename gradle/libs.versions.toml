@@ -9,6 +9,14 @@ lifecycleRuntimeKtx = "2.6.2"
 activityCompose = "1.8.1"
 composeBom = "2023.10.01"
 voyager = "1.0.0-rc10"
+googleServices = "4.4.0"
+ksp = "1.9.20-1.0.14"
+firebaseAuth = "22.3.0"
+firebase-bom = "32.6.0"
+playServicesAuth = "20.7.0"
+kodein = '7.14.0'
+lyricist = '1.2.2'
+firebaseFirestore = "24.9.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,7 +44,40 @@ voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voy
 voyager-kodein = { module = "cafe.adriel.voyager:voyager-kodein", version.ref = "voyager" }
 voyager-rxjava = { module = "cafe.adriel.voyager:voyager-rxjava", version.ref = "voyager" }
 
+kodein-android = { module = "org.kodein.di:kodein-di-framework-android-x", version.ref = "kodein" }
+kodein-conf = { module = "org.kodein.di:kodein-di-conf", version.ref = "kodein" }
+kodein-core = { module = "org.kodein.di:kodein-di", version.ref = "kodein" }
+
+lyricist = { module = "cafe.adriel.lyricist:lyricist", version.ref = "lyricist" }
+lyricist-processor = { module = "cafe.adriel.lyricist:lyricist-processor", version.ref = "lyricist" }
+
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx" }
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx"}
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx"}
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
+
+
+ksp = { module = "com.google.devtools.ksp:symbol-processing", version.ref = "ksp" }
+google-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 
+[bundles]
+firebase = [
+    "firebase-analytics",
+    "firebase-auth",
+    "firebase-storage",
+
+    "firebase-config",
+    "firebase-database-ktx",
+    "firebase-firestore"
+]

@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.gms.google-services")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -61,8 +63,23 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.voyager.androidx)
+    implementation(libs.voyager.kodein)
     implementation(libs.voyager.navigator)
-    
+
+    implementation(libs.play.services.auth)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firebase)
+
+
+    implementation(libs.kodein.core)
+    implementation(libs.kodein.conf)
+    implementation(libs.kodein.android)
+
+    implementation(libs.lyricist)
+    implementation(libs.google.firebase.firestore)
+    ksp(libs.lyricist.processor)
+
+
     //Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
