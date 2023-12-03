@@ -14,9 +14,11 @@ ksp = "1.9.20-1.0.14"
 firebaseAuth = "22.3.0"
 firebase-bom = "32.6.0"
 playServicesAuth = "20.7.0"
-kodein = '7.14.0'
+kodein = '7.20.2'
 lyricist = '1.2.2'
 firebaseFirestore = "24.9.1"
+systemUiController = "0.27.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -58,10 +60,11 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx" }
-firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx"}
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx"}
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "systemUiController" }
 
 ksp = { module = "com.google.devtools.ksp:symbol-processing", version.ref = "ksp" }
 google-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
@@ -69,14 +72,13 @@ google-firebase-firestore = { group = "com.google.firebase", name = "firebase-fi
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 [bundles]
 firebase = [
     "firebase-analytics",
     "firebase-auth",
     "firebase-storage",
-
     "firebase-config",
     "firebase-database-ktx",
     "firebase-firestore"

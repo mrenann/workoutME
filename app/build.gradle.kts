@@ -79,7 +79,8 @@ dependencies {
     implementation(libs.google.firebase.firestore)
     ksp(libs.lyricist.processor)
 
-
+    implementation(libs.accompanist.systemuicontroller)
+    
     //Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
