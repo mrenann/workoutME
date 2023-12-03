@@ -4,5 +4,14 @@ import cafe.adriel.lyricist.LyricistStrings
 
 @LyricistStrings(languageTag = Locales.EN, default = false)
 internal val StringsEn = Strings(
-    initial = "INitil"
+    appName = "WorkoutMe",
+    login = StringsLogin(
+        title = "Manage Gym\nWorkouts",
+        alreadyUserSubtitle = "Already a user ?",
+        newUserSubtitle = "Dont have a account ?",
+        signUpOption = "Sign Up",
+        loginOption = "Login",
+        contiueLoginOption = "Login",
+        contiueSignUpOption = "Register"
+    )
 )

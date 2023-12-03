@@ -1,52 +1,78 @@
 package br.mrenann.workoutme.view.steps.login
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.mrenann.workoutme.HomeScreen
+import br.mrenann.workoutme.R
 import br.mrenann.workoutme.resource.LocalStrings
+import br.mrenann.workoutme.resource.strings
 import br.mrenann.workoutme.utils.uiState.UiStateLogin
 import br.mrenann.workoutme.view.BaseApp
+import br.mrenann.workoutme.view.components.InputField
+import br.mrenann.workoutme.view.components.InputFieldPassword
+import br.mrenann.workoutme.view.components.Loading
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.kodein.rememberScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 internal object LoginScreen : Screen {
@@ -55,50 +81,107 @@ internal object LoginScreen : Screen {
     override fun Content() {
         val viewModel = rememberScreenModel<LoginScreenStepModel>()
         val state by viewModel.state.collectAsState()
-
+        val strings = LocalStrings.current
         val navigator = LocalNavigator.currentOrThrow
         val showLoginForm = rememberSaveable { mutableStateOf(true) }
-
+        val systemUiController = rememberSystemUiController()
+        SideEffect {
+            systemUiController.setSystemBarsColor(
+                color = Color.Black
+            )
+        }
         Surface(modifier = Modifier.fillMaxSize()) {
+
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
 
-                when(state){
+                Card(
+                    shape = RoundedCornerShape(0.dp, 0.dp, 20.dp, 20.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.Black,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.6F),
+
+                    ) {
+                    Box {
+                        Image(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .fillMaxHeight(0.5F)
+                                .fillMaxWidth(0.7F),
+                            painter = painterResource(id = R.drawable.ic_login_image),
+                            contentDescription = ""
+                        )
+                        Column(
+                            modifier = Modifier
+                                .padding(30.dp)
+                                .fillMaxSize()
+                        ) {
+                            Text(
+                                text = strings.appName,
+                                color = Color.White,
+                                fontWeight = FontWeight.Thin
+                            )
+                            Spacer(modifier = Modifier.padding(20.dp))
+                            Text(
+                                modifier = Modifier,
+                                text = strings.login.title,
+                                color = Color.White,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 35.sp,
+                                lineHeight = 40.sp
+                            )
+                        }
+                    }
+
+                }
+
+                when (state) {
                     is UiStateLogin.Loading -> {}
                     is UiStateLogin.Error -> {}
                     is UiStateLogin.SuccessToLogin -> showLoginForm.value = true
                     is UiStateLogin.SuccessToHome -> navigator.push(HomeScreen)
                 }
 
-                if (showLoginForm.value) UserForm(loading = false, isCreateAccount = false) { email, password ->
-                    viewModel.signInWithEmailAndPassword(email = email, password = password)
-                }
-                else UserForm(loading = false, isCreateAccount = true) { email, password ->
-                    viewModel.createUserWithEmailAndPassword(email, password)
+                if (showLoginForm.value) {
+                    UserForm(
+                        modifier = Modifier.weight(1F), loading = false, isCreateAccount = false
+                    ) { email, password, _ ->
+                        viewModel.signInWithEmailAndPassword(email = email, password = password)
+                    }
+                } else {
+                    UserForm(
+                        modifier = Modifier.weight(1F), loading = false, isCreateAccount = true
+                    ) { email, password, isPersonal ->
+                        viewModel.createUserWithEmailAndPassword(email, password, isPersonal)
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
 
                 Row(
-                    modifier = Modifier.padding(15.dp),
+                    modifier = Modifier.padding(4.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    Text(text = if (!showLoginForm.value) "Already a user?" else "New User?")
+                    Text(text = if (!showLoginForm.value) strings.login.alreadyUserSubtitle else strings.login.newUserSubtitle)
                     Text(
-                        text = if (!showLoginForm.value) "Login" else "Sign up",
+                        text = if (!showLoginForm.value) strings.login.loginOption else strings.login.signUpOption,
                         modifier = Modifier
-                            .padding(5.dp)
+                            .padding(vertical = 5.dp)
                             .clickable {
                                 showLoginForm.value = !showLoginForm.value
                             },
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Medium,
                         color = Color.Green.copy(alpha = 0.5f)
                     )
                 }
+
             }
         }
     }
@@ -107,39 +190,79 @@ internal object LoginScreen : Screen {
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun UserForm(
+    modifier: Modifier,
     loading: Boolean = false,
     isCreateAccount: Boolean = false,
-    onDone: (String, String) -> Unit,
+    onDone: (String, String, Boolean) -> Unit,
 ) {
-
-    val email = rememberSaveable { mutableStateOf("marcos.renann.br@gmail.com") }
-    val password = rememberSaveable { mutableStateOf("123456a") }
+    val strings = LocalStrings.current
+    val email = rememberSaveable { mutableStateOf("") }
+    val password = rememberSaveable { mutableStateOf("") }
+    val isPersonal = rememberSaveable { mutableStateOf(false) }
+    val passwordVisibility = rememberSaveable { mutableStateOf(false) }
+    val passwordFocusRequest = FocusRequester.Default
     val keyboardController = LocalSoftwareKeyboardController.current
     val valid = remember(email.value, password.value) {
         email.value.trim().isNotEmpty() && password.value.trim().isNotEmpty()
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .background(Color.Transparent)
+            .padding(horizontal = 12.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        if (isCreateAccount) Text(
-            text = "TESTE",
-            modifier = Modifier.padding(8.dp),
-            fontStyle = FontStyle.Italic,
-            color = Color.Yellow.copy(alpha = 0.7f)
-        ) else Spacer(modifier = Modifier.height(56.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
+        InputField(valueState = email,
+            labelId = "Email",
+            keyboardType = KeyboardType.Email,
+            enabled = !loading,
+            onAction = KeyboardActions {
+                passwordFocusRequest.requestFocus()
+            })
+
+        InputFieldPassword(modifier = Modifier.focusRequester(passwordFocusRequest),
+            valueState = password,
+            labelId = "Password",
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done,
+            enabled = !loading,
+            passwordVisibility = passwordVisibility,
+            onAction = KeyboardActions {
+                if (!valid) return@KeyboardActions
+                onDone(email.value.trim(), password.value.trim(), isPersonal.value)
+            })
+
+        if (isCreateAccount) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp)
+                    .selectable(
+                        selected = isPersonal.value,
+                        onClick = { isPersonal.value = !isPersonal.value },
+                        role = Role.RadioButton
+                    )
+                    .padding(vertical = 5.dp), verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = isPersonal.value, onClick = null
+
+                )
+                Text(modifier = Modifier.padding(start = 10.dp), text = "É Personal")
+            }
+
+        }
 
         SubmitButton(
-            textId = if (isCreateAccount) "Create Account" else "Login",
+            textId = if (isCreateAccount) strings.login.contiueSignUpOption else strings.login.contiueLoginOption,
             loading = loading,
             validInputs = valid
         ) {
-            onDone(email.value.trim(), password.value.trim())
+            onDone(email.value.trim(), password.value.trim(), isPersonal.value)
             keyboardController?.hide()
         }
     }
@@ -155,17 +278,15 @@ private fun SubmitButton(
     Button(
         onClick = { onClick() },
         modifier = Modifier
-            .padding(3.dp)
+            .padding(vertical = 3.dp)
             .fillMaxWidth(),
         enabled = !loading && validInputs,
-        shape = CircleShape,
+        shape = RoundedCornerShape(12.dp),
     ) {
-        if (!loading)
-            Text(
-                text = textId,
-                modifier = Modifier.padding(5.dp),
-                color = Color.White
-            )
+        if (loading) Loading()
+        else Text(
+            text = textId, modifier = Modifier.padding(5.dp), color = Color.White
+        )
     }
 }
 

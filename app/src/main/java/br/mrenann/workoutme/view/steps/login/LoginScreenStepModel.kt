@@ -32,13 +32,13 @@ class LoginScreenStepModel : StateScreenModel<UiStateLogin>(UiStateLogin.Loading
         }
     }
 
-    fun createUserWithEmailAndPassword(email: String, password: String) {
+    fun createUserWithEmailAndPassword(email: String, password: String, isPersonal: Boolean) {
         try {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val displayName = task.result?.user?.email?.split('@')?.get(0)
-                        createUser(displayName)
+                        createUser(displayName,isPersonal)
                         mutableState.value = UiStateLogin.SuccessToLogin
                     } else {
                         mutableState.value = UiStateLogin.Error(Exception())
@@ -49,13 +49,13 @@ class LoginScreenStepModel : StateScreenModel<UiStateLogin>(UiStateLogin.Loading
         }
     }
 
-    private fun createUser(displayName: String?) {
+    private fun createUser(displayName: String?, isPersonal: Boolean) {
         val userId = auth.currentUser?.uid
         val user = UserUI(
             id = null,
             userId = userId.toString(),
             displayName = displayName.toString(),
-            isPersonal = false,
+            isPersonal = isPersonal,
         ).toMap()
 
         FirebaseFirestore
