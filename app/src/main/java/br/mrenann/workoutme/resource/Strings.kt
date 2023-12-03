@@ -13,4 +13,5 @@ data class StringsLogin(
     val signUpOption: String,
     val contiueLoginOption: String,
     val contiueSignUpOption: String,
+    val isPersonalOption: String,
 )

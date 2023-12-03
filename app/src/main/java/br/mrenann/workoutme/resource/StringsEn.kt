@@ -12,6 +12,7 @@ internal val StringsEn = Strings(
         signUpOption = "Sign Up",
         loginOption = "Login",
         contiueLoginOption = "Login",
-        contiueSignUpOption = "Register"
+        contiueSignUpOption = "Register",
+        isPersonalOption = "Its a Personal ?"
     )
 )
