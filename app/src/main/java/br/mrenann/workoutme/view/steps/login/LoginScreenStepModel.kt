@@ -3,8 +3,9 @@ package br.mrenann.workoutme.view.steps.login
 import br.mrenann.workoutme.domain.UserUI
 import br.mrenann.workoutme.utils.uiState.UiStateLogin
 import cafe.adriel.voyager.core.model.StateScreenModel
-import cafe.adriel.voyager.core.model.coroutineScope
+import cafe.adriel.voyager.core.model.screenModelScope
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -15,7 +16,7 @@ class LoginScreenStepModel : StateScreenModel<UiStateLogin>(UiStateLogin.Loading
 
     private val auth: FirebaseAuth = Firebase.auth
 
-    fun signInWithEmailAndPassword(email: String, password: String) = coroutineScope.launch {
+    fun signInWithEmailAndPassword(email: String, password: String) = screenModelScope.launch {
         try {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
