@@ -80,7 +80,9 @@ dependencies {
     ksp(libs.lyricist.processor)
 
     implementation(libs.accompanist.systemuicontroller)
-    
+
+    implementation(libs.composeIcons.feather)
+
     //Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
