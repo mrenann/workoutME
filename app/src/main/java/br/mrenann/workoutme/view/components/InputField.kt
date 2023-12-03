@@ -3,6 +3,7 @@ package br.mrenann.workoutme.view.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -38,11 +40,11 @@ internal fun InputField(
     keyboardType: KeyboardType = KeyboardType.Text,
     onAction: KeyboardActions = KeyboardActions.Default
 ) {
-    OutlinedTextField(
+    TextField(
         modifier = modifier
-            .background(Color.Transparent)
             .padding(bottom = 10.dp, start = 10.dp, end = 10.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .background(color = Color(color = 0xFFE7E7E7), shape = RoundedCornerShape(10.dp)),
         value = valueState.value,
         onValueChange = { valueState.value = it },
         label = { Text(text = labelId) },
@@ -54,13 +56,13 @@ internal fun InputField(
         enabled = enabled,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = onAction,
-        colors = OutlinedTextFieldDefaults.colors(
-            cursorColor = MaterialTheme.colorScheme.secondary,
-            focusedBorderColor = MaterialTheme.colorScheme.secondary,
-            unfocusedBorderColor = MaterialTheme.colorScheme.onBackground,
-            focusedLabelColor = MaterialTheme.colorScheme.secondary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
-        )
+        colors = TextFieldDefaults.colors(
+            cursorColor = Color.Transparent,
+            focusedLabelColor = Color.Gray,
+            unfocusedLabelColor = Color.Gray,
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent
+        ),
     )
 }
 
@@ -68,5 +70,5 @@ internal fun InputField(
 @Composable
 fun InputPreview() {
     var input = rememberSaveable { mutableStateOf("") }
-    InputField(valueState = input, labelId = "ABC" )
+    InputField(valueState = input, labelId = "ABC")
 }

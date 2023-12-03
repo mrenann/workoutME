@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
@@ -43,10 +44,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.center
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -86,8 +91,8 @@ internal object LoginScreen : Screen {
         val showLoginForm = rememberSaveable { mutableStateOf(true) }
         val systemUiController = rememberSystemUiController()
         SideEffect {
-            systemUiController.setSystemBarsColor(
-                color = Color.Black
+            systemUiController.setStatusBarColor(
+                color = Color(0xFF91B46E)
             )
         }
         Surface(modifier = Modifier.fillMaxSize()) {
@@ -104,10 +109,44 @@ internal object LoginScreen : Screen {
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(0.6F),
+                        .fillMaxHeight(0.55F),
 
                     ) {
-                    Box {
+                    Box(
+                        modifier = Modifier
+                            .background(
+                                brush = Brush.linearGradient(
+                                    colors = listOf(
+                                        Color(0xFF91B46E),
+                                        Color(0xFF34653B),
+                                    )
+                                )
+                            )
+                            .drawBehind {
+                                drawCircle(
+                                    brush = Brush.linearGradient(
+                                        colors = listOf(
+                                            Color(0xFF91B46E).copy(alpha = 0.4f),
+                                            Color(0xFF34653B).copy(alpha = 0.2f)
+                                        )
+                                    ),
+                                    center = this.size.center * 2f,
+                                    radius = this.size.width / 2f
+                                )
+                                drawCircle(
+                                    brush = Brush.linearGradient(
+                                        tileMode = TileMode.Mirror,
+                                        colors = listOf(
+                                            Color(0xFF91B46E).copy(alpha = 0.4f),
+                                            Color(0xFF34653B).copy(alpha = 0.2f)
+                                        )
+                                    ),
+                                    center = this.size.center.copy(y = this.size.height * 1.4f),
+                                    radius = this.size.width / 2.5f
+                                )
+                            }
+                            .heightIn(min = 185.dp),
+                    ) {
                         Image(
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
@@ -149,24 +188,24 @@ internal object LoginScreen : Screen {
 
                 if (showLoginForm.value) {
                     UserForm(
-                        modifier = Modifier.weight(1F), loading = false, isCreateAccount = false
+                        modifier = Modifier.weight(1F).padding(top = 7.dp), loading = false, isCreateAccount = false
                     ) { email, password, _ ->
                         viewModel.signInWithEmailAndPassword(email = email, password = password)
                     }
                 } else {
                     UserForm(
-                        modifier = Modifier.weight(1F), loading = false, isCreateAccount = true
+                        modifier = Modifier.weight(1F).padding(top = 7.dp), loading = false, isCreateAccount = true
                     ) { email, password, isPersonal ->
                         viewModel.createUserWithEmailAndPassword(email, password, isPersonal)
                     }
                 }
 
-                Spacer(modifier = Modifier.height(15.dp))
+                Spacer(modifier = Modifier.height(3.dp))
 
-                Row(
-                    modifier = Modifier.padding(4.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier = Modifier.padding(12.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
                     Text(text = if (!showLoginForm.value) strings.login.alreadyUserSubtitle else strings.login.newUserSubtitle)
@@ -252,7 +291,7 @@ private fun UserForm(
                     selected = isPersonal.value, onClick = null
 
                 )
-                Text(modifier = Modifier.padding(start = 10.dp), text = "É Personal")
+                Text(modifier = Modifier.padding(start = 10.dp), text = strings.login.isPersonalOption)
             }
 
         }

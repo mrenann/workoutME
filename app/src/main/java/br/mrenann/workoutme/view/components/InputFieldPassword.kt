@@ -3,6 +3,7 @@ package br.mrenann.workoutme.view.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.IconButton
@@ -13,7 +14,10 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +32,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Eye
+import compose.icons.feathericons.EyeOff
 
 @Composable
 internal fun InputFieldPassword(
@@ -45,11 +52,11 @@ internal fun InputFieldPassword(
     val visualTransformation = if (passwordVisibility.value)
         VisualTransformation.None else PasswordVisualTransformation()
 
-    OutlinedTextField(
+    TextField(
         modifier = modifier
-            .background(Color.Transparent)
             .padding(bottom = 10.dp, start = 10.dp, end = 10.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .background(color = Color(color = 0xFFE7E7E7), shape = RoundedCornerShape(10.dp)),
         value = valueState.value,
         onValueChange = { valueState.value = it },
         label = { Text(text = labelId) },
@@ -62,12 +69,12 @@ internal fun InputFieldPassword(
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = onAction,
         visualTransformation = visualTransformation,
-        colors = OutlinedTextFieldDefaults.colors(
-            cursorColor = MaterialTheme.colorScheme.secondary,
-            focusedBorderColor = MaterialTheme.colorScheme.secondary,
-            unfocusedBorderColor = MaterialTheme.colorScheme.onBackground,
-            focusedLabelColor = MaterialTheme.colorScheme.secondary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
+        colors = TextFieldDefaults.colors(
+            cursorColor = Color.Gray,
+            focusedLabelColor = Color.Gray,
+            unfocusedLabelColor = Color.Gray,
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent
         ),
         trailingIcon = {
             PasswordVisibility(passwordVisibility = passwordVisibility)
@@ -82,10 +89,21 @@ private fun PasswordVisibility(
 
     val visible = passwordVisibility.value
 
-    IconButton(onClick = {
+    IconButton(
+        onClick = {
         passwordVisibility.value = !visible
     }) {
-        Icons.Default.Close
+        if (passwordVisibility.value) {
+            Icon(imageVector = FeatherIcons.Eye,
+                "contentDescription",
+                tint = Color.Red)
+        } else {
+            Icon(imageVector = FeatherIcons.EyeOff,
+                "contentDescription",
+                tint = Color.Red)
+        }
+
+
     }
 }
 
