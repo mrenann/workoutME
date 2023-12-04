@@ -17,12 +17,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import br.mrenann.workoutme.domain.model.ExerciseUI
-import br.mrenann.workoutme.domain.model.TrainingSheetUI
 import br.mrenann.workoutme.resource.LocalStrings
 import br.mrenann.workoutme.utils.uiState.UiStateExercises
-import br.mrenann.workoutme.utils.uiState.UiStateTrainingSheet
 import br.mrenann.workoutme.view.components.homeTab.ExercisesListComponent
-import br.mrenann.workoutme.view.components.homeTab.TrainingSheetsListComponent
 import br.mrenann.workoutme.view.steps.home.tabs.exercisesTab.updateExerciseScreen.UpdateExerciseScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.kodein.rememberScreenModel
@@ -102,11 +99,10 @@ object ExerciseTabFirstScreen : Screen {
         listExerciseUI: SnapshotStateList<ExerciseUI>,
     ) {
         val strings = LocalStrings.current
+        val navigator = LocalNavigator.currentOrThrow
 
         Column(modifier) {
-            ExercisesListComponent(sheetList = listExerciseUI, loading = loading, error = error) {
-                println("CLICOU")
-            }
+            ExercisesListComponent(sheetList = listExerciseUI, loading = loading, error = error, navigator = navigator)
         }
     }
 }

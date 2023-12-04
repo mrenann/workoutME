@@ -4,8 +4,11 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -53,10 +56,15 @@ internal object UpdateSheetScreen : Screen {
             )
         }
 
-        Button(onClick = {
-            viewModel.createTrainingSheet(nome.value,descricao.value)
-        }) {
-
+        Button(
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp),
+            onClick = {
+                viewModel.createTrainingSheet(nome.value,descricao.value)
+            }) {
+            Text(text = "Enviar")
         }
     }
 }

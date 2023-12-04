@@ -1,6 +1,7 @@
 package br.mrenann.workoutme.di
 
 import br.mrenann.workoutme.domain.FirebaseRepositoryRemote
+import br.mrenann.workoutme.view.steps.home.tabs.exercisesTab.detailsScreen.DetailsExerciseStepModel
 import br.mrenann.workoutme.view.steps.home.tabs.exercisesTab.listScreen.ExerciseTabFirstStepModel
 import br.mrenann.workoutme.view.steps.home.tabs.trainingSheetTab.listScreen.TrainingSheetScreenStepModel
 import br.mrenann.workoutme.view.steps.home.tabs.exercisesTab.updateExerciseScreen.UpdateExerciseStepModel
@@ -16,4 +17,5 @@ val stepModelModule = DI.Module(name = "viewModelModule") {
     bindProvider { ExerciseTabFirstStepModel(instance<FirebaseRepositoryRemote>()) }
     bindProvider { UpdateSheetStepModel() }
     bindProvider { UpdateExerciseStepModel() }
+    bindProvider { DetailsExerciseStepModel() }
 }
