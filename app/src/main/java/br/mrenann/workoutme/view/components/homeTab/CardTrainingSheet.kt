@@ -59,14 +59,17 @@ internal fun CardTrainingSheet (
             sheetUI.descricao?.let {
                 Text(modifier = Modifier, text = it, fontWeight = FontWeight.Thin)
             }
+            Text(text = "0 exercicios")
+            Spacer(modifier = Modifier.padding(10.dp))
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.End
             ) {
+
                 sheetUI.date?.let {
                     Text(modifier = Modifier, text = it, fontWeight = FontWeight.Thin)
                 }
-                sheetUI.createrId?.let {
+                sheetUI.creatorId?.let {
                     if(it != sheetUI.userId)  Text(text = it)
                 }
             }
