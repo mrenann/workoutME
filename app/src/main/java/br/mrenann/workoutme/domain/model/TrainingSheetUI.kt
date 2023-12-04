@@ -5,6 +5,6 @@ data class TrainingSheetUI(
     var nome: String? = "",
     var descricao: String? = "",
     var userId: String? = null,
-    var createrId: String? = null,
+    var creatorId: String? = null,
     var date: String? ="",
 )

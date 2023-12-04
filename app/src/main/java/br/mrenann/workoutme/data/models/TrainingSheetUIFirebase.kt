@@ -11,8 +11,8 @@ data class TrainingSheetUIFirebase(
     @get:PropertyName("user_id")
     @set:PropertyName("user_id")
     var userId: String? = null,
-    @get:PropertyName("creater_id")
-    @set:PropertyName("creater_id")
-    var createrId: String? = null,
+    @get:PropertyName("creator_id")
+    @set:PropertyName("creator_id")
+    var creatorId: String? = null,
     var date: String? ="",
 )
