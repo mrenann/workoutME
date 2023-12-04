@@ -1,4 +1,4 @@
-package br.mrenann.workoutme.view.steps.home.tabs.homeTab
+package br.mrenann.workoutme.view.steps.home.tabs.trainingSheetTab.listScreen
 
 import br.mrenann.workoutme.domain.FirebaseRepositoryRemote
 import br.mrenann.workoutme.utils.uiState.UiStateTrainingSheet
@@ -6,7 +6,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.launch
 
-internal class HomeScreenStepModel(
+internal class TrainingSheetScreenStepModel(
     private val firebaseRepositoryRemote: FirebaseRepositoryRemote,
 ) : StateScreenModel<UiStateTrainingSheet>(UiStateTrainingSheet.Loading) {
 
