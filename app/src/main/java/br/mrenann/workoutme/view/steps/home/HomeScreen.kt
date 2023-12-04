@@ -3,7 +3,6 @@ package br.mrenann.workoutme.view.steps.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -14,10 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.unit.dp
 import br.mrenann.workoutme.view.steps.home.tabs.homeTab.HomeTab
-import br.mrenann.workoutme.view.steps.home.tabs.TrainingSheetTab
-import br.mrenann.workoutme.view.steps.home.tabs.HomeTab3
+import br.mrenann.workoutme.view.steps.home.tabs.trainingSheetTab.TrainingSheetTab
+import br.mrenann.workoutme.view.steps.home.tabs.exercisesTab.exercisesTab
 import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.tab.CurrentTab
@@ -27,6 +25,7 @@ import cafe.adriel.voyager.navigator.tab.TabDisposable
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
+import compose.icons.evaicons.fill.Compass
 import compose.icons.evaicons.fill.FileText
 import compose.icons.evaicons.fill.Grid
 
@@ -59,7 +58,7 @@ object HomeScreen : Screen {
                         NavigationBar {
                             TabNavigationItem(HomeTab)
                             TabNavigationItem(TrainingSheetTab)
-                            TabNavigationItem(HomeTab3)
+                            TabNavigationItem(exercisesTab)
                         }
                     }
 
@@ -81,8 +80,8 @@ object HomeScreen : Screen {
                 rememberVectorPainter(EvaIcons.Fill.FileText)
             }
 
-            HomeTab3.key -> {
-                rememberVectorPainter(EvaIcons.Fill.Grid)
+            exercisesTab.key -> {
+                rememberVectorPainter(EvaIcons.Fill.Compass)
             }
 
             else -> {
