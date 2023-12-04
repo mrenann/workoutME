@@ -65,11 +65,11 @@ dependencies {
     implementation(libs.voyager.androidx)
     implementation(libs.voyager.kodein)
     implementation(libs.voyager.navigator)
+    implementation(libs.voyager.tabNavigator)
 
     implementation(libs.play.services.auth)
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.firebase)
-
 
     implementation(libs.kodein.core)
     implementation(libs.kodein.conf)
@@ -81,6 +81,7 @@ dependencies {
 
     implementation(libs.accompanist.systemuicontroller)
 
+    implementation(libs.composeIcons.evaIcons)
     implementation(libs.composeIcons.feather)
 
     //Testes

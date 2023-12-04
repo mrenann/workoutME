@@ -1,6 +1,8 @@
 package br.mrenann.workoutme
 
 import android.app.Application
+import br.mrenann.workoutme.di.firebaseModule
+import br.mrenann.workoutme.di.repositoryModule
 import br.mrenann.workoutme.di.stepModelModule
 import org.kodein.di.DI
 import org.kodein.di.DIAware
@@ -25,4 +27,6 @@ class WorkoutApplication : Application(), DIAware {
 
 internal fun ConfigurableDI.loadAppModules() {
     addImport(stepModelModule)
+    addImport(repositoryModule)
+    addImport(firebaseModule)
 }

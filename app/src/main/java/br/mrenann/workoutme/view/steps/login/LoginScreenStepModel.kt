@@ -1,16 +1,14 @@
 package br.mrenann.workoutme.view.steps.login
 
-import br.mrenann.workoutme.domain.UserUI
+import br.mrenann.workoutme.domain.model.UserUI
 import br.mrenann.workoutme.utils.uiState.UiStateLogin
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
-import java.util.Date
 
 class LoginScreenStepModel : StateScreenModel<UiStateLogin>(UiStateLogin.Loading) {
 

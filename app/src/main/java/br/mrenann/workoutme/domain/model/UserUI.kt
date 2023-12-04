@@ -1,4 +1,4 @@
-package br.mrenann.workoutme.domain
+package br.mrenann.workoutme.domain.model
 
 data class UserUI(
     val id: String?,

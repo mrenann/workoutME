@@ -55,9 +55,7 @@ fun WorkoutMeTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            systemUiController.setSystemBarsColor(
-                color = Color.Transparent
-            )
+
         }
     }
 
