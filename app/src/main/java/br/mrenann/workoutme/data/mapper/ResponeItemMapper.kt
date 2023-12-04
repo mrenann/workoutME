@@ -12,7 +12,7 @@ internal object ResponseItemMapper {
             descricao = descricao,
             date = date,
             userId = userId,
-            createrId = createrId,
+            creatorId = creatorId,
         )
     }
 
@@ -23,7 +23,7 @@ internal object ResponseItemMapper {
             descricao = descricao,
             date = date,
             userId = userId,
-            createrId = createrId,
+            creatorId = creatorId,
         )
     }
 
