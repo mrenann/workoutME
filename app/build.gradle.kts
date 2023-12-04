@@ -66,6 +66,9 @@ dependencies {
     implementation(libs.voyager.kodein)
     implementation(libs.voyager.navigator)
     implementation(libs.voyager.tabNavigator)
+    implementation(libs.voyager.transitions)
+
+    implementation(libs.coil)
 
     implementation(libs.play.services.auth)
     implementation(platform(libs.firebase.bom))
