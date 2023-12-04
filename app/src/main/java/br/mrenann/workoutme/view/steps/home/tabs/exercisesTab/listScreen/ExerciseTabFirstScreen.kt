@@ -1,4 +1,4 @@
-package br.mrenann.workoutme.view.steps.home.tabs.trainingSheetTab.listScreen
+package br.mrenann.workoutme.view.steps.home.tabs.exercisesTab.listScreen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -16,58 +16,58 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import br.mrenann.workoutme.domain.model.ExerciseUI
 import br.mrenann.workoutme.domain.model.TrainingSheetUI
 import br.mrenann.workoutme.resource.LocalStrings
+import br.mrenann.workoutme.utils.uiState.UiStateExercises
 import br.mrenann.workoutme.utils.uiState.UiStateTrainingSheet
+import br.mrenann.workoutme.view.components.homeTab.ExercisesListComponent
 import br.mrenann.workoutme.view.components.homeTab.TrainingSheetsListComponent
-import br.mrenann.workoutme.view.steps.home.tabs.trainingSheetTab.updateSheetScreen.UpdateSheetScreen
+import br.mrenann.workoutme.view.steps.home.tabs.exercisesTab.updateExerciseScreen.UpdateExerciseScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.kodein.rememberScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.google.firebase.auth.FirebaseAuth
 
-object TrainingSheetTabFirstScreen : Screen {
+object ExerciseTabFirstScreen : Screen {
 
     @Composable
     override fun Content() {
-        val viewModel = rememberScreenModel<TrainingSheetScreenStepModel>()
+        val viewModel = rememberScreenModel<ExerciseTabFirstStepModel>()
         val state by viewModel.state.collectAsState()
 
-        TrainingSheetObserver(state = state)
+        ExerciseObserver(state = state)
     }
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
-    private fun TrainingSheetObserver(
-        state: UiStateTrainingSheet,
+    private fun ExerciseObserver(
+        state: UiStateExercises,
     ) {
-        val listTrainingSheetUI = remember { mutableStateListOf<TrainingSheetUI>() }
+        val listExerciseUI = remember { mutableStateListOf<ExerciseUI>() }
         val loading = remember { mutableStateOf(false) }
         val error = remember { mutableStateOf(false) }
         val currentUser = FirebaseAuth.getInstance().currentUser
 
         when (state) {
-            is UiStateTrainingSheet.Loading -> {
+            is UiStateExercises.Loading -> {
                 println("LOADING")
                 loading.value = true
                 error.value = false
             }
 
-            is UiStateTrainingSheet.Error -> {
+            is UiStateExercises.Error -> {
                 println(state.error.message)
                 loading.value = false
                 error.value = true
             }
 
-            is UiStateTrainingSheet.Success -> {
-                println(state.sheetList)
-                listTrainingSheetUI.clear()
-                state.sheetList.map { sheet ->
-                    sheet?.let { sheetUI ->
-                        if (sheetUI.userId == currentUser?.uid) {
-                            listTrainingSheetUI.add(sheetUI)
-                        }
+            is UiStateExercises.Success -> {
+                listExerciseUI.clear()
+                state.exercises.map { exercise ->
+                    exercise?.let { exerciseUI ->
+                        listExerciseUI.add(exerciseUI)
                     }
                 }
                 loading.value = false
@@ -79,7 +79,7 @@ object TrainingSheetTabFirstScreen : Screen {
             floatingActionButton = {
                 val navigator = LocalNavigator.currentOrThrow
                 FloatingActionButton(
-                    onClick = { navigator.push(UpdateSheetScreen)},
+                    onClick = { navigator.push(UpdateExerciseScreen)},
                 ) {
                     Icon(Icons.Filled.Add, "Floating action button.")
                 }
@@ -88,7 +88,7 @@ object TrainingSheetTabFirstScreen : Screen {
                     modifier = Modifier,
                     loading = loading,
                     error = error,
-                    sheetListUI = listTrainingSheetUI
+                    listExerciseUI = listExerciseUI
                 )
             }
         )
@@ -99,12 +99,12 @@ object TrainingSheetTabFirstScreen : Screen {
         modifier: Modifier,
         loading: MutableState<Boolean>,
         error: MutableState<Boolean>,
-        sheetListUI: SnapshotStateList<TrainingSheetUI>,
+        listExerciseUI: SnapshotStateList<ExerciseUI>,
     ) {
         val strings = LocalStrings.current
 
         Column(modifier) {
-            TrainingSheetsListComponent(sheetList = sheetListUI, loading = loading, error = error) {
+            ExercisesListComponent(sheetList = listExerciseUI, loading = loading, error = error) {
                 println("CLICOU")
             }
         }

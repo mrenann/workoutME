@@ -2,26 +2,23 @@ package br.mrenann.workoutme.view.steps.home.tabs.trainingSheetTab.updateSheetSc
 
 import br.mrenann.workoutme.data.mapper.ResponseItemMapper
 import br.mrenann.workoutme.domain.model.TrainingSheetUI
-import br.mrenann.workoutme.domain.model.UserUI
 import br.mrenann.workoutme.utils.uiState.UiStateLogin
 import cafe.adriel.voyager.core.model.StateScreenModel
-import cafe.adriel.voyager.core.model.screenModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.launch
 
 class UpdateSheetStepModel : StateScreenModel<UiStateLogin>(UiStateLogin.Loading) {
 
     private val auth: FirebaseAuth = Firebase.auth
 
-    fun createTrainingSheet() {
+    fun createTrainingSheet(nome: String, descricao: String) {
         val userId = auth.currentUser?.uid
         val user = TrainingSheetUI(
             id = null,
-            nome = "Nome",
-            descricao = "Descricao",
+            nome = nome,
+            descricao = descricao,
             userId = userId.toString(),
             creatorId = userId.toString(),
             date = "Datee"

@@ -1,11 +1,14 @@
 package br.mrenann.workoutme.view.steps.home.tabs.exercisesTab
 
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import br.mrenann.workoutme.view.steps.home.tabs.exercisesTab.listScreen.ExerciseTabFirstScreen
+import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import cafe.adriel.voyager.transitions.SlideTransition
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Outline
 import compose.icons.evaicons.outline.Compass
@@ -28,6 +31,12 @@ object exercisesTab : Tab {
 
     @Composable
     override fun Content() {
-        Text(text = "HOME TAB 3")
+        Navigator(listOf(ExerciseTabFirstScreen)) { navigator ->
+            SlideTransition(navigator) { screen ->
+                Column {
+                    screen.Content()
+                }
+            }
+        }
     }
 }

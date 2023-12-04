@@ -10,6 +10,6 @@ import org.kodein.di.singleton
 val repositoryModule = DI.Module("repositoryModule") {
 
     bind<FirebaseRepositoryRemote>() with singleton {
-        FirebaseRepositoryRemoteImpl(instance())
+        FirebaseRepositoryRemoteImpl(instance(arg = "sheet"),instance(arg = "exercise"))
     }
 }
