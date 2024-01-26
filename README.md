@@ -4,3 +4,6 @@ Desenvolvido utilizando as tecnologias:
 - Jetpack Compose
 - Firebase
 - Kotlin
+
+ ## EM BREVE
+ 
